@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import { ReactComponent as OurLogo } from './HPCCL_larger.svg';
 import  Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav'
+import { NavLink } from 'react-router-dom'
 
 function Navigation() {
   return (
@@ -18,11 +19,11 @@ function Navigation() {
               height="50"
               className="d-inline-block align-top"
             />
-          <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#events">Events</Nav.Link>
-            <Nav.Link href="#Contact">Contact</Nav.Link>
-            <Nav.Link href="#register">Register</Nav.Link>
-            <Nav.Link href="#login">Log In</Nav.Link>
+          <NavLink to="/">Home</NavLink>
+            <NavLink to="events">Events</NavLink>
+            <NavLink to="Contact">Contact</NavLink>
+            <NavLink to="register">Register</NavLink>
+            <NavLink to="login">Log In</NavLink>
             </Nav>
         </Container>
       </Navbar>
