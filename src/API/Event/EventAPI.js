@@ -1,40 +1,26 @@
 import AbstractAPIClient from "../AbstractAPIClient";
 
-
-
-
-
-class EventApi extends AbstractAPIClient {
+class EventAPI extends AbstractAPIClient {
     constructor() {
         super();
-        this.baseURL = "https://event-backend.onrender.com/";
-        this.token = "";
-      
+        this.baseURL = "https://event-backend-4z0x.onrender.com";
     }
 
-
-    async getAllEvents(EventModel) {
+    async getAllEvents(token, queryParams = {}) {
         try {
-        fetch()
-            const params = {
-                token: this.token
+            const url = `${this.baseURL}/events/`;
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+                params: queryParams
             };
-            const url = `${this.baseURL}?${new URLSearchParams(params)}`;
-            const data = await this.fetchData(url);
-            // Since we can only get 3 hour intervals for 5 days, we are forced to filter the response
-            return { ...data, list: filteredData };
+            const data = await this.fetchData(url, config);
+            return data;
         } catch (error) {
-            throw new Error("Failed to fetch 5-day forecast");
+            // Handle the error here
+            console.error(error);
+            throw error;
         }
     }
-
-    // async getOneEvent() {
-    //     try {
-    //         fetch(baseURL + '')
-    //     }
-    // }
-
-    
 }
 
-export default EventApi;
+export default EventAPI;

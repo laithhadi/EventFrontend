@@ -1,12 +1,12 @@
-import React from 'react'
 import Container from 'react-bootstrap/Container';
 import { ReactComponent as OurLogo } from './HPCCL_larger.svg';
 import  Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav'
-import { NavLink } from 'react-router-dom'
+import Nav from 'react-bootstrap/Nav';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
-function Navigation() {
+function NavigationBar() {
   return (
+    <>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">
@@ -27,8 +27,15 @@ function Navigation() {
             </Nav>
         </Container>
       </Navbar>
-    
+      <Routes>
+        <Route path="/"  />
+        <Route path="/events" />
+        <Route path="/contact" />
+        <Route path="/login" />
+        <Route path="/register" />
+      </Routes>
+    </>
   )
 }
 
-export default Navigation
+export default NavigationBar
