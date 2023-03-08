@@ -8,29 +8,16 @@ class EventApi extends AbstractAPIClient {
     constructor() {
         super();
         this.baseURL = "https://event-backend.onrender.com/";
-        this.token = "79635c6cf66b1dc393e8496f6d80e8a3";
+        this.token = "";
       
     }
-
-
-
-
-
 
 
     async getAllEvents(EventModel) {
         try {
         fetch()
             const params = {
-                name: EventModel.name,
-                location: EventModel.location,
-                venue: EventModel.venue,
-                photoUrl: EventModel.photoUrl,
-                startDate: EventModel.startDate,
-                endDate: EventModel.endDate,
-                price: EventModel.price,
-                rating: EventModel.rating,
-                appid: this.token,
+                token: this.token
             };
             const url = `${this.baseURL}?${new URLSearchParams(params)}`;
             const data = await this.fetchData(url);
