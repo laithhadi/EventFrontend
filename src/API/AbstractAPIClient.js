@@ -20,6 +20,11 @@ class AbstractAPIClient {
             throw new Error(resObj.status);
         }
     }
+    
+    async fetchData(url, config = {}) {
+        const response = await this.getRequest(url, config);
+        return response.data;
+    }
 
     async getRequest(url, config = {}) {
         try {
@@ -31,9 +36,34 @@ class AbstractAPIClient {
         }
     }
 
-    async fetchData(url, config = {}) {
-        const response = await this.getRequest(url, config);
-        return response.data;
+    async postRequest(url, data, config = {}) {
+        try {
+            const req = await axios.post(url, data, config);
+            const res = await this.responseStatusCheck(req);
+            return res;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async patchRequest(url, data, config = {}) {
+        try {
+            const req = await axios.patch(url, data, config);
+            const res = await this.responseStatusCheck(req);
+            return res;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteRequest(url, config = {}) {
+        try {
+            const req = await axios.delete(url, config);
+            const res = await this.responseStatusCheck(req);
+            return res;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

@@ -1,9 +1,9 @@
 import AbstractAPIClient from "../AbstractAPIClient";
 
-class EventAPI extends AbstractAPIClient {
+class UserAPICalls extends AbstractAPIClient {
     constructor() {
         super();
-        this.baseURL = "https://event-backend-4z0x.onrender.com";
+        this.baseURL = "https://event-backend-4z0x.onrender.com/users/";
     }
 
     async getAllEvents(token, queryParams = {}) {
@@ -23,4 +23,4 @@ class EventAPI extends AbstractAPIClient {
     }
 }
 
-export default EventAPI;
+export default UserAPICalls;
