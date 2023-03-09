@@ -38,8 +38,6 @@ class AuthAPICalls extends AbstractAPIClient {
             const response = await this.postRequest(`${this.baseURL}${operation}`, data);
             return response.data;
         } catch (error) {
-            // Handle the error here
-            console.error(error);
             throw error;
         }
     }

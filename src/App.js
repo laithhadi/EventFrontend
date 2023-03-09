@@ -3,20 +3,15 @@ import NavigationBar from './Components/Header/NavigationBar'
 import SiteFooter from "./Components/Footer/SiteFooter";
 import AppRoutes from './Components/AppRoutes';
 import { useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
+import { decodeToken } from './Components/_utils';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = decodeToken();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (token) {
-      const decodedToken = jwt_decode(token);
-      if (decodedToken.exp * 1000 < Date.now()) {
-        localStorage.removeItem('token');
-      } else {
-        setIsLoggedIn(true);
-      }
+      setIsLoggedIn(true);
     }
   }, []);
 

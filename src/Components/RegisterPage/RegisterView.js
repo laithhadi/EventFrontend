@@ -5,10 +5,10 @@ import AuthAPICalls from "../../API/Event/AuthAPICalls";
 function RegisterView() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessages, setErrorMessage] = useState("");
 
   const authAPI = new AuthAPICalls();
- 
+
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
@@ -19,15 +19,18 @@ function RegisterView() {
       localStorage.setItem("token", token);
       //TODO: Redirect to the homepage
       window.location.href = "/";
-      } catch (error) {
-      setErrorMessage(error.response.data.message);
-      }
-    };
+    } catch (error) {
+      setErrorMessage(error.response.data.errors.map((error) => {
+        return error;
+      }));
+    }
+  };
 
   return (
     <Container className="mt-5">
       <h1>Register</h1>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      {errorMessages && <Alert variant="danger">{errorMessages}</Alert>}
+
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="username">
           <Form.Label>Choose your username:</Form.Label>

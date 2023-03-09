@@ -22,7 +22,7 @@ code {
 }
 
 .footer {
-  margin-top: auto;
+  padding-top: 10px;
   background-color: #A0EEC0;
   height: auto;
   position: fixed;
@@ -44,4 +44,36 @@ code {
 .footer p {
   color: black;
   font-weight: bold;
+}
+
+.card {
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+  transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.event-card-img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 200fr));
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 1rem;
+}
+
+.card-text {
+  margin: 0;
 }
