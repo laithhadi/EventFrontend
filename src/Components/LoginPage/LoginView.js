@@ -18,10 +18,8 @@ function LoginView({ setIsLoggedIn }) {
     try {
       setIsLoading(true);
       const loginData = { username, password };
-      const response = await authAPI.loginOrRegister(loginData, "login");
-      const token = response.token;
-
-      localStorage.setItem("token", token);
+      await authAPI.loginOrRegister(loginData, "login");
+      
       setIsLoggedIn(true);
       navigate('/', { replace: true });
     } catch (error) {

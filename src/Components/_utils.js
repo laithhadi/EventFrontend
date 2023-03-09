@@ -1,13 +1,13 @@
 import jwt_decode from "jwt-decode";
+import Cookie from "js-cookie";
 
-// Returns null if expired, token if not
-export const getEncodedToken = () => {
-    const token = localStorage.getItem('token');
+export const getToken = () => {
+    const token = Cookie.get("token");
 
     if (token) {
         const decodedToken = jwt_decode(token);
         if (decodedToken.exp * 1000 < Date.now()) {
-            localStorage.removeItem('token');
+            Cookie.remove("token");
             return null;
         } else {
             return token;
@@ -17,19 +17,15 @@ export const getEncodedToken = () => {
     return null;
 };
 
-// Returns null if expired, token if not
-export const decodeToken = () => {
-    const token = localStorage.getItem('token');
+export const isAdmin = () => {
+    const token = Cookie.get("token");
+    if (!token) return false;
 
-    if (token) {
-        const decodedToken = jwt_decode(token);
-        if (decodedToken.exp * 1000 < Date.now()) {
-            localStorage.removeItem('token');
-            return null;
-        } else {
-            return decodedToken;
-        }
+    const decodedToken = jwt_decode(token);
+    if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
+        Cookie.remove("token");
+        return false;
     }
 
-    return null;
-};
+    return decodedToken.isAdmin || false;
+}

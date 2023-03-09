@@ -6,13 +6,13 @@ import LoginView from "./LoginPage/LoginView";
 import RegisterView from "./RegisterPage/RegisterView";
 import ContactView from "./ContactPage/ContactView";
 
-function AppRoutes({ isLoggedIn, setIsLoggedIn }) {
+function AppRoutes({ isLoggedIn, setIsLoggedIn, isAdmin }) {
     return (
         <Routes>
             <Route path="/" element={<HomepageView />} />
             <Route path="/events" element={isLoggedIn ? <EventsView /> : <Navigate to="/login" />} />
             <Route path="/contact" element={<ContactView />} />
-            <Route path="/admin" element={isLoggedIn ? <AdminView /> : <Navigate to="/login" />} />
+            <Route path="/admin" element={isLoggedIn && isAdmin ? <AdminView /> : <Navigate to="/login" />} />
             <Route path="/login" element={<LoginView setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/register" element={<RegisterView setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>

@@ -1,7 +1,7 @@
 import SearchBox from "./SearchBox";
 import EventCards from "./EventCards";
 import EventAPICalls from "../../API/Event/EventAPICalls";
-import { getEncodedToken } from "../_utils";
+import { getToken } from "../_utils";
 import { Container, Alert, Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
@@ -14,7 +14,7 @@ function EventsView() {
     const fetchData = async () => {
       try {
         const eventApi = new EventAPICalls();
-        const data = await eventApi.getAllEvents(getEncodedToken());
+        const data = await eventApi.getAllEvents(getToken());
         setEventData(data);
         setIsLoading(false);
       } catch (error) {

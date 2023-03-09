@@ -2,13 +2,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from './SiteLogo';
+import Cookie from "js-cookie";
 
-function NavigationBar({ isLoggedIn, setIsLoggedIn }) {
+function NavigationBar({ isLoggedIn, setIsLoggedIn, isAdmin }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('token');
+    Cookie.remove("token");
     navigate('/login', { replace: true });
   };
 
@@ -29,11 +30,13 @@ function NavigationBar({ isLoggedIn, setIsLoggedIn }) {
           </NavLink>
         </Nav>
         <Nav className="ms-auto">
+          {isLoggedIn && isAdmin &&
+            <NavLink to="/admin" className="nav-link">
+              Admin
+            </NavLink>
+          }
           {isLoggedIn ? (
             <>
-              <NavLink to="/admin" className="nav-link">
-                Admin
-              </NavLink>
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             </>
           ) : (

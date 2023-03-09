@@ -1,5 +1,5 @@
 import AbstractAPIClient from "../AbstractAPIClient";
-import jwt_decode from "jwt-decode";
+import Cookie from "js-cookie";
 
 class AuthAPICalls extends AbstractAPIClient {
     constructor() {
@@ -7,35 +7,15 @@ class AuthAPICalls extends AbstractAPIClient {
         this.baseURL = "https://event-backend-4z0x.onrender.com/auth/";
     }
 
-    isLoggedIn() {
-        const token = localStorage.getItem("token");
-        if (!token) return false;
-
-        const decodedToken = jwt_decode(token);
-        if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
-            localStorage.removeItem("token");
-            return false;
-        }
-
-        return true;
-    }
-
-    isAdmin() {
-        const token = localStorage.getItem("token");
-        if (!token) return false;
-
-        const decodedToken = jwt_decode(token);
-        if (!decodedToken || Date.now() >= decodedToken.exp * 1000) {
-            localStorage.removeItem("token");
-            return false;
-        }
-
-        return true;
-    }
-
     async loginOrRegister(data, operation) {
         try {
-            const response = await this.postRequest(`${this.baseURL}${operation}`, data);
+            const response = await this.postRequest(
+                `${this.baseURL}${operation}`,
+                data
+            );
+
+            const token = response.data.token;
+            Cookie.set("token", token, { expires: 1/24, secure: true, sameSite: "strict" });
             return response.data;
         } catch (error) {
             throw error;
