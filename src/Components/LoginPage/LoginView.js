@@ -13,10 +13,11 @@ function LoginView() {
     event.preventDefault();
     try {
       const loginData = { username, password };
-      const response = await authAPI.login(loginData);
+      const response = await authAPI.loginOrRegister(loginData, "login");
       const token = response.token;
 
       localStorage.setItem("token", token);
+      //TODO: Redirect to the homepage
       window.location.href = "/";
     } catch (error) {
       setErrorMessage(error.response.data.message);

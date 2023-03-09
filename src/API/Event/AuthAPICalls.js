@@ -33,9 +33,9 @@ class AuthAPICalls extends AbstractAPIClient {
         return true;
     }
 
-    async login(loginData) {
+    async loginOrRegister(data, operation) {
         try {
-            const response = await this.postRequest(`${this.baseURL}/login`, loginData);
+            const response = await this.postRequest(`${this.baseURL}${operation}`, data);
             return response.data;
         } catch (error) {
             // Handle the error here
