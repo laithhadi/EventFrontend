@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Form, Button, Container, Alert, Spinner } from "react-bootstrap";
 import AuthAPICalls from "../../API/Event/AuthAPICalls";
+import { useNavigate } from "react-router-dom";
 
-function LoginView() {
+function LoginView({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessages, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const authAPI = new AuthAPICalls();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     try {
       setIsLoading(true);
       const loginData = { username, password };
@@ -19,11 +22,12 @@ function LoginView() {
       const token = response.token;
 
       localStorage.setItem("token", token);
-      //TODO: Redirect to the homepage
-      window.location.href = "/";
+      setIsLoggedIn(true);
+      navigate('/', { replace: true });
     } catch (error) {
-      setIsLoading(false);
       setErrorMessage(error.response.data.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
