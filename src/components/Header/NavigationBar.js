@@ -7,7 +7,7 @@ function NavigationBar({ isLoggedIn, setIsLoggedIn }) {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token');
-    window.location.href = "/";
+    window.location.href = "/login";
   };
 
   return (
