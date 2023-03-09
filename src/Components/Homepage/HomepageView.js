@@ -1,6 +1,12 @@
+import EventsCarousel from "./EventsCarousel"
+import GoogleEventCard from "./GoogleEventCard"
+
 function HomeView() {
   return (
-    <div>HomeView</div>
+    <>
+    <EventsCarousel />
+    <GoogleEventCard />
+    </>
   )
 }
 export default HomeView
