@@ -53,7 +53,7 @@ function EventModal(props) {
     return (
         <Modal show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit {formData.description}</Modal.Title>
+                <Modal.Title>Edit {formData.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
