@@ -24,7 +24,7 @@ class EventAPICalls extends AbstractAPIClient {
 
     async getEvent(token, eventId) {
         try {
-            const url = `${this.baseURL}/${eventId}`;
+            const url = `${this.baseURL}${eventId}`;
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };
@@ -54,14 +54,13 @@ class EventAPICalls extends AbstractAPIClient {
 
     async updateEvent(token, eventId, eventData) {
         try {
-            const url = `${this.baseURL}/${eventId}`;
+            const url = `${this.baseURL}${eventId}`;
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };
             const response = await this.patchRequest(url, eventData, config);
             return response.data;
         } catch (error) {
-            // Handle the error here
             console.error(error);
             throw error;
         }
@@ -69,7 +68,7 @@ class EventAPICalls extends AbstractAPIClient {
 
     async deleteEvent(token, eventId) {
         try {
-            const url = `${this.baseURL}/${eventId}`;
+            const url = `${this.baseURL}${eventId}`;
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };

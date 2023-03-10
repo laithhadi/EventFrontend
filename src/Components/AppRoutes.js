@@ -5,8 +5,13 @@ import AdminView from "./AdminPage/AdminView";
 import LoginView from "./LoginPage/LoginView";
 import RegisterView from "./RegisterPage/RegisterView";
 import ContactView from "./ContactPage/ContactView";
+import { getToken } from './_utils';
 
 function AppRoutes({ isLoggedIn, setIsLoggedIn, isAdmin }) {
+    if (getToken()) {
+        isLoggedIn = true;
+    }
+
     return (
         <Routes>
             <Route path="/" element={<HomepageView />} />

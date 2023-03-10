@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import EventAPICalls from "../../API/Event/EventAPICalls";
+import { getToken } from "../_utils";
 
 function EventModal(props) {
+    const api = new EventAPICalls();
+    const token = getToken();
     const [formData, setFormData] = useState({
         name: props.event.name,
         description: props.event.description,
@@ -22,15 +26,25 @@ function EventModal(props) {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // TODO: update event API call here
+        try {
+            const updatedEvent = await api.updateEvent(token, props.event._id, formData);
+            console.log("Event updated:", updatedEvent);
+        } catch (error) {
+            console.error("Failed to update event:", error);
+        }
         props.onHide();
     };
 
-    const handleDelete = (event) => {
+    const handleDelete = async (event) => {
         event.preventDefault();
-        // TODO: update event API call here
+        try {
+            await api.deleteEvent(token, props.event._id);
+            props.onHide();
+        } catch (error) {
+            console.error("Failed to delete event:", error);
+        }
         props.onHide();
     };
 

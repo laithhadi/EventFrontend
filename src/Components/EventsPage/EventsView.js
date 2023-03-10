@@ -9,26 +9,62 @@ function EventsView() {
   const [errorMessage, setErrorMessage] = useState("");
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchField, setSearchField] = useState("name");
+
+  const fetchData = async () => {
+    try {
+      const eventApi = new EventAPICalls();
+      const data = await eventApi.getAllEvents(getToken());
+      setEventData(data);
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const eventApi = new EventAPICalls();
-        const data = await eventApi.getAllEvents(getToken());
-        setEventData(data);
-        setIsLoading(false);
-      } catch (error) {
-        setErrorMessage(error.response.data.message);
-        setIsLoading(false);
-      }
-    };
     fetchData();
   }, []);
+
+  const handleSearch = (query, field) => {
+    setSearchQuery(query);
+    setSearchField(field);
+  };
+
+  const filteredEvents = eventData.filter((event) => {
+    const { name, venue, location, rating } = event;
+    const eventDate = new Date(event.startDate).toLocaleString("en-GB");
+
+    let searchFieldVal = "";
+
+    switch (searchField) {
+      case "venue":
+        searchFieldVal = venue.toLowerCase();
+        break;
+      case "location":
+        searchFieldVal = location.toLowerCase();
+        break;
+      case "rating":
+        searchFieldVal = rating !== undefined ? rating.toString() : "Unavailable";
+        break;
+      case "date":
+        searchFieldVal = eventDate;
+        break;
+      default:
+        searchFieldVal = name.toLowerCase();
+        break;
+    }
+
+    return searchFieldVal.includes(searchQuery.toLowerCase());
+  });
+
 
   return (
     <Container>
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      <SearchBox />
+      <SearchBox onSearch={handleSearch} />
       {isLoading ? (
         <div className="text-center">
           <Spinner animation="border" role="status">
@@ -36,9 +72,10 @@ function EventsView() {
           </Spinner>
         </div>
       ) : (
-        <EventCards eventData={eventData} />
+          <EventCards eventData={filteredEvents} />
       )}
     </Container>
   );
 }
+
 export default EventsView;
