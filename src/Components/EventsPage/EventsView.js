@@ -2,8 +2,9 @@ import SearchBox from "./SearchBox";
 import EventCards from "./EventCards";
 import EventAPICalls from "../../API/Event/EventAPICalls";
 import { getToken } from "../_utils";
-import { Container, Alert, Spinner } from "react-bootstrap";
+import { Container, Alert, Spinner, Button, Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import CreateEventModal from "./CreateEventModal";
 
 function EventsView() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -11,6 +12,7 @@ function EventsView() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchField, setSearchField] = useState("name");
+  const [modalShow, setModalShow] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -62,9 +64,16 @@ function EventsView() {
 
 
   return (
-    <Container>
+    <Container className="mt-3">
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      <SearchBox onSearch={handleSearch} />
+      <Row>
+        <Col lg={8}><SearchBox onSearch={handleSearch} /></Col>
+        <Col lg={4}>
+          <Button variant="light" onClick={() => setModalShow(true)}>
+            Create New Event
+          </Button>
+        </Col>
+      </Row>
       {isLoading ? (
         <div className="text-center">
           <Spinner animation="border" role="status">
@@ -72,8 +81,11 @@ function EventsView() {
           </Spinner>
         </div>
       ) : (
-          <EventCards eventData={filteredEvents} />
+        <EventCards eventData={filteredEvents} />
       )}
+      <CreateEventModal
+        show={modalShow} onHide={() => setModalShow(false)}
+      />
     </Container>
   );
 }

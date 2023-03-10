@@ -25,9 +25,6 @@ function NavigationBar({ isLoggedIn, setIsLoggedIn, isAdmin }) {
           <NavLink to="/events" className="nav-link">
             Events
           </NavLink>
-          <NavLink to="/contact" className="nav-link">
-            Contact
-          </NavLink>
         </Nav>
         <Nav className="ms-auto">
           {isLoggedIn && isAdmin &&

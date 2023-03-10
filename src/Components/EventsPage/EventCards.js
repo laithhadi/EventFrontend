@@ -9,7 +9,7 @@ function EventCards(props) {
             ) : (
                 props.eventData.map(function (event, index) {
                     return (
-                        <div className="col" key={index}>
+                        <div className="col mb-3" key={index}>
                             <SingleEventCard event={event} key={index} />
                         </div>
                     );

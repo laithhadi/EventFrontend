@@ -30,7 +30,7 @@ function RegisterView({ setIsLoggedIn }) {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 register-container">
       {isLoading ? (
         <div className="text-center">
           <Spinner animation="border" role="status">

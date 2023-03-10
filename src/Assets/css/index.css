@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  background-color: #000100;
+  background-color: #292929;
   height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -76,8 +76,18 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(310px, 200fr));
   grid-auto-rows: minmax(100px, auto);
   grid-gap: 1rem;
+  padding-bottom: 20px;
 }
 
 .card-text {
   margin: 0;
+}
+
+.login-container,
+.register-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  border: 3px solid #000000;
+  border-radius: 10px;
 }

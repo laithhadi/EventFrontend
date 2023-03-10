@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 import EventAPICalls from "../../API/Event/EventAPICalls";
 import { getToken } from "../_utils";
 
-function EventModal(props) {
-    const api = new EventAPICalls();
-    const token = getToken();
+function CreateEventModal(props) {
+    const [validationErrors, setValidationErrors] = useState("");
     const [formData, setFormData] = useState({
-        name: props.event.name,
-        description: props.event.description,
-        location: props.event.location,
-        venue: props.event.venue,
-        startDate: props.event.startDate,
-        endDate: props.event.endDate,
-        photoUrl: props.event.photoUrl,
-        price: props.event.price,
-        rating: props.event.rating,
+        name: "",
+        description: "",
+        location: "",
+        venue: "",
+        startDate: "",
+        endDate: "",
+        photoUrl: "",
+        price: "",
+        rating: "",
     });
+
+    const api = new EventAPICalls();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -29,33 +30,49 @@ function EventModal(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const updatedEvent = await api.updateEvent(token, props.event._id, {
+            await api.createEvent(getToken(), {
                 ...formData
             });
-            console.log("Event updated:", updatedEvent);
-        } catch (error) {
-            console.error("Failed to update event:", error);
-        }
-        props.onHide();
-    };
 
-    const handleDelete = async (event) => {
-        event.preventDefault();
-        try {
-            await api.deleteEvent(token, props.event._id);
+            setFormData({
+                name: "",
+                description: "",
+                location: "",
+                venue: "",
+                startDate: "",
+                endDate: "",
+                photoUrl: "",
+                price: "",
+                rating: "",
+            });
             props.onHide();
         } catch (error) {
-            console.error("Failed to delete event:", error);
+            setValidationErrors(error.response.data.errors);
         }
-        props.onHide();
+    };
+
+    const renderErrors = () => {
+        return (
+            <>
+                {validationErrors.map((error, i) => {
+                    return <p key={i}>{error}</p>
+                })}
+            </>
+        );
     };
 
     return (
         <Modal show={props.show} onHide={props.onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit {formData.description}</Modal.Title>
+                <Modal.Title>Create a new event</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {
+                validationErrors 
+                && <Alert variant="danger">
+                        {renderErrors()}
+                </Alert>
+                }
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Name</Form.Label>
@@ -139,10 +156,7 @@ function EventModal(props) {
                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Update
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Delete
+                        Create
                     </Button>
                 </Form>
             </Modal.Body>
@@ -150,4 +164,4 @@ function EventModal(props) {
     );
 }
 
-export default EventModal;
+export default CreateEventModal;
