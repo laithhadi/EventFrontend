@@ -22,6 +22,22 @@ class EventAPICalls extends AbstractAPIClient {
         }
     }
 
+    async getTopFiveRatedEvents(token, queryParams = {}) {
+        try {
+            const url = `${this.baseURL}/top`;
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+                params: queryParams
+            };
+            const data = await this.fetchData(url, config);
+            return data;
+        } catch (error) {
+            // Handle the error here
+            console.error(error);
+            throw error;
+        }
+    }
+
     async getEvent(token, eventId) {
         try {
             const url = `${this.baseURL}${eventId}`;

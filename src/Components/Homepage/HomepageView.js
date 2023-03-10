@@ -1,6 +1,11 @@
-function HomeView() {
+import EventCarousel from "./EventCarousel";
+
+function HomepageView() {
   return (
-    <div>HomeView</div>
+    <>
+      <EventCarousel />
+    </>
   )
 }
-export default HomeView
+
+export default HomepageView;
